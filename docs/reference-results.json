@@ -1,0 +1,60 @@
+{
+  "reference": "pyloudnorm 0.2.0, DeMan filters",
+  "thresholdLU": 0.01,
+  "fixtures": [
+    {
+      "name": "multitone-noise-44100",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 176400,
+      "referenceLufs": -19.41255405831577,
+      "actualLufs": -19.412554171908834,
+      "errorLU": -1.1359306384406409e-7
+    },
+    {
+      "name": "gated-dynamic-44100",
+      "sampleRate": 44100,
+      "channels": 2,
+      "frames": 176400,
+      "referenceLufs": -20.35967692673836,
+      "actualLufs": -20.35967704739634,
+      "errorLU": -1.2065797960758573e-7
+    },
+    {
+      "name": "multitone-noise-48000",
+      "sampleRate": 48000,
+      "channels": 2,
+      "frames": 192000,
+      "referenceLufs": -19.411111440561196,
+      "actualLufs": -19.41111155617137,
+      "errorLU": -1.1561017387862194e-7
+    },
+    {
+      "name": "gated-dynamic-48000",
+      "sampleRate": 48000,
+      "channels": 2,
+      "frames": 192000,
+      "referenceLufs": -20.357333003588597,
+      "actualLufs": -20.35733315744304,
+      "errorLU": -1.5385444385174196e-7
+    },
+    {
+      "name": "multitone-noise-96000",
+      "sampleRate": 96000,
+      "channels": 2,
+      "frames": 384000,
+      "referenceLufs": -19.422577414198024,
+      "actualLufs": -19.422577547856307,
+      "errorLU": -1.3365828266387325e-7
+    },
+    {
+      "name": "gated-dynamic-96000",
+      "sampleRate": 96000,
+      "channels": 2,
+      "frames": 384000,
+      "referenceLufs": -20.373018285813423,
+      "actualLufs": -20.373018398654327,
+      "errorLU": -1.1284090462027052e-7
+    }
+  ]
+}

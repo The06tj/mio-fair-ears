@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#141615">
+  <meta name="description" content="Compare two audio files with matched loudness, synchronized playback and blind preference rounds. Audio stays in your browser. Free and open source.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; worker-src 'self'; connect-src 'none'; img-src 'self' data:; media-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Mio Fair Ears — Listen without the labels.</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to listening room</a>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Mio Fair Ears home"><span class="brand-mark" aria-hidden="true">m.</span><span>Mio <strong>Fair Ears</strong></span><span class="version">v0.1</span></a>
+    <nav aria-label="Main"><button id="about-open" class="text-button" data-i18n="how">How it works</button><div class="language" role="group" aria-label="Language"><button id="lang-en" lang="en" aria-pressed="true">EN</button><button id="lang-zh" lang="zh" aria-pressed="false">中文</button></div><a class="github-link" href="https://github.com/The06tj/mio-fair-ears" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section class="intro">
+      <div><p class="eyebrow" data-i18n="room">YOUR PRIVATE LISTENING ROOM</p><h1 data-i18n="headline">Listen without the labels.</h1><p class="intro-copy" data-i18n="intro">Two versions. Same loudness. Find the one you actually prefer.</p></div>
+      <button id="demo" class="secondary"><span aria-hidden="true">♫</span> <span data-i18n="demo">Try a demo pair</span></button>
+    </section>
+    <div id="notice" class="notice" role="status" hidden></div>
+    <div id="error" class="error" role="alert" hidden></div>
+    <div class="workspace">
+      <section class="listen-column" aria-label="Audio comparison">
+        <div class="section-line"><h2 data-i18n="sources">THE LISTENING DESK</h2><span id="mode-badge" class="pill" data-i18n="sighted">OPEN LISTENING</span></div>
+        <div class="decks">
+          <article class="deck deck-a" id="deck-0">
+            <div class="deck-top"><span class="slot-letter">A</span><span class="deck-tag" id="tag-0" data-i18n="versionA">FIRST VERSION</span><button id="remove-0" class="icon-button" aria-label="Remove file A" hidden>×</button></div>
+            <div class="dropzone" id="drop-0"><input class="sr-only" type="file" id="file-0" accept="audio/*,.wav,.wave,.mp3,.flac,.m4a,.aac,.aif,.aiff,.ogg,.opus"><button id="choose-0" class="choose"><span class="upload-symbol" aria-hidden="true">＋</span><span data-i18n="drop">Drop an audio file</span><small data-i18n="browse">or click to browse</small></button></div>
+            <div class="loaded" id="loaded-0" hidden><p class="filename" id="name-0"></p><p class="filemeta" id="meta-0"></p><div class="waveframe"><canvas id="wave-0" aria-label="Waveform of file A"></canvas><span class="blind-wave" id="blind-wave-0" hidden data-i18n="earsOnly">Just your ears, now.</span></div></div>
+            <div class="format-note" id="format-0" data-i18n="formats">WAV, MP3, FLAC & more · up to 5 min / 80 MB</div>
+            <button id="listen-0" class="audition" aria-pressed="true" disabled><span class="audition-light" aria-hidden="true"></span><span data-i18n="listenA">Listen to A</span><kbd>1</kbd></button>
+          </article>
+          <article class="deck deck-b" id="deck-1">
+            <div class="deck-top"><span class="slot-letter">B</span><span class="deck-tag" id="tag-1" data-i18n="versionB">SECOND VERSION</span><button id="remove-1" class="icon-button" aria-label="Remove file B" hidden>×</button></div>
+            <div class="dropzone" id="drop-1"><input class="sr-only" type="file" id="file-1" accept="audio/*,.wav,.wave,.mp3,.flac,.m4a,.aac,.aif,.aiff,.ogg,.opus"><button id="choose-1" class="choose"><span class="upload-symbol" aria-hidden="true">＋</span><span data-i18n="drop">Drop an audio file</span><small data-i18n="browse">or click to browse</small></button></div>
+            <div class="loaded" id="loaded-1" hidden><p class="filename" id="name-1"></p><p class="filemeta" id="meta-1"></p><div class="waveframe"><canvas id="wave-1" aria-label="Waveform of file B"></canvas><span class="blind-wave" id="blind-wave-1" hidden data-i18n="earsOnly">Just your ears, now.</span></div></div>
+            <div class="format-note" id="format-1" data-i18n="formats">WAV, MP3, FLAC & more · up to 5 min / 80 MB</div>
+            <button id="listen-1" class="audition" aria-pressed="false" disabled><span class="audition-light" aria-hidden="true"></span><span data-i18n="listenB">Listen to B</span><kbd>2</kbd></button>
+          </article>
+        </div>
+        <section class="transport" aria-label="Playback">
+          <div class="transport-main"><button id="restart" class="icon-button" aria-label="Back to start" disabled>↤</button><button id="play" class="play-button" aria-label="Play" disabled><span id="play-symbol" aria-hidden="true">▶</span></button><span class="timecode" id="elapsed">0:00.0</span><input id="seek" type="range" min="0" max="1" step="0.01" value="0" aria-label="Playback position" disabled><span class="timecode duration" id="duration">0:00.0</span><label class="volume-label"><span aria-hidden="true">◖))</span><input id="volume" type="range" min="0" max="100" value="50" aria-label="Playback volume"></label></div>
+          <div class="loop-row"><label class="check-label"><input id="loop" type="checkbox" disabled><span data-i18n="loop">Loop a section</span></label><div class="loop-inputs"><label><span data-i18n="from">From</span><input id="loop-start" type="number" min="0" step="0.1" value="0" disabled></label><span class="loop-divider">—</span><label><span data-i18n="to">To</span><input id="loop-end" type="number" min="0.4" step="0.1" value="0" disabled></label><span class="muted" data-i18n="seconds">sec</span></div><span class="sync-label" data-i18n="sync">Synchronized playback</span></div>
+        </section>
+        <p class="keyboard-hint"><kbd>Space</kbd> <span data-i18n="playPause">play / pause</span><span class="hint-separator">·</span><kbd>1</kbd> <kbd>2</kbd> <span data-i18n="switch">switch versions</span><span class="hint-separator">·</span><kbd>←</kbd> <kbd>→</kbd> <span data-i18n="seekKeys">seek 5 sec</span></p>
+        <section id="results" class="results" tabindex="-1" hidden aria-labelledby="results-title"><div class="section-line"><h2 id="results-title" data-i18n="revealTitle">HERE'S WHAT YOUR EARS CHOSE</h2><span class="pill" id="rounds-complete"></span></div><div id="result-bars"></div><p id="ties" class="muted"></p><p class="result-caveat" data-i18n="caveat">A snapshot of your preference in this session. No right answer, no claim of scientific significance.</p><label class="notes-label" for="notes" data-i18n="notes">Listening notes</label><textarea id="notes" rows="2" maxlength="2000" data-placeholder="notesPlaceholder" placeholder="What stood out? A warmer vocal, a clearer kick…"></textarea><div class="result-actions"><button id="export" class="primary" data-i18n="export">Export results · JSON</button><button id="again" class="secondary" data-i18n="again">Listen again</button></div><p class="export-hint" data-i18n="exportHint">The download includes filenames, votes, settings and your notes. Audio is never included.</p></section>
+      </section>
+      <aside class="controls" aria-label="Listening settings">
+        <section class="match-panel"><div class="panel-heading"><span class="step-number">01</span><h2 data-i18n="levelTitle">Level the playing field.</h2></div><label class="switch-row"><span data-i18n="match">Match loudness</span><input id="match" type="checkbox" role="switch" checked><span class="switch-art" aria-hidden="true"></span></label><p class="panel-copy" data-i18n="matchCopy">Turn down the louder version, so volume gets less of a vote.</p><div class="gain-readouts"><div><span class="gain-name">A</span><strong id="gain-0">—</strong><small>dB</small></div><div><span class="gain-name">B</span><strong id="gain-1">—</strong><small>dB</small></div></div><p id="match-detail" class="detail"></p></section>
+        <section class="blind-panel"><div class="panel-heading"><span class="step-number">02</span><h2 data-i18n="blindTitle">Let your ears decide.</h2></div><div id="blind-setup"><p class="panel-copy" data-i18n="blindCopy">Hide the names. Shuffle A and B each round. Choose your favorite, then reveal.</p><label class="rounds-label"><span data-i18n="rounds">Listening rounds</span><select id="rounds"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option></select></label><button id="start-blind" class="primary wide" disabled><span data-i18n="startBlind">Start blind listening</span><span aria-hidden="true">↗</span></button><p class="detail" data-i18n="preference">A preference test · no right or wrong answers</p></div><div id="blind-active" hidden><div class="round-display"><strong id="round-number"></strong><span id="round-total"></span></div><div class="round-progress" id="round-progress" aria-hidden="true"></div><p class="panel-copy" id="vote-instruction" role="status"></p><div class="votes"><button id="vote-0" class="vote" disabled data-i18n="preferA">Prefer A</button><button id="vote-1" class="vote" disabled data-i18n="preferB">Prefer B</button></div><button id="vote-tie" class="secondary wide" disabled data-i18n="noPreference">No preference</button><button id="end-blind" class="text-button end-blind" data-i18n="finishEarly">Finish & reveal</button></div></section>
+        <p class="private-note"><span aria-hidden="true">⌁</span><span data-i18n="privacy">Your audio stays in this tab.<br>No uploads. No account. Just listening.</span></p>
+      </aside>
+    </div>
+    <footer><span>Mio Fair Ears <span class="footer-dot">/</span> <span data-i18n="footer">Made for curious ears.</span></span><button id="method-open" class="text-button" data-i18n="method">Listening notes & limitations</button><span class="open-source">OPEN SOURCE · MIT</span></footer>
+  </main>
+  <dialog id="about" aria-labelledby="about-title"><div class="dialog-top"><p class="eyebrow">MIO FAIR EARS</p><button id="about-close" class="icon-button" aria-label="Close">×</button></div><h2 id="about-title" data-i18n="aboutTitle">A fairer little listening room.</h2><div id="about-content"></div><button id="about-done" class="primary" data-i18n="gotIt">Got it. Let's listen.</button></dialog>
+  <noscript>This listening room needs JavaScript. Audio is processed locally in your browser.</noscript>
+</body>
+</html>
